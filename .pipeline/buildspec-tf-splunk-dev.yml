@@ -13,7 +13,6 @@ cache:
 phases:
   pre_build:
     commands:
-      - export DEPLOY_PATH="accounts/${ENVIRONMENT}/"
       - echo "Pre-build phase"
       - echo "Installing Terraform version ${TERRAFORM_VERSION}..."
       - dnf install -y dnf-utils
@@ -24,7 +23,6 @@ phases:
   build:
     commands:
       - echo "Changing the directory to the deployment path..."
-      - cd "${DEPLOY_PATH}"
       - echo "Initializing Terraform..."
       - terraform init
       - terraform plan --var-file="dev.tfvars" -out=tfplan
