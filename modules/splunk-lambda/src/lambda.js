@@ -14,8 +14,8 @@ async function getSecret(secretName) {
 async function initLogger() {
   const urlSecretName = process.env.SPLUNK_HEC_URL;     
   const tokenSecretName = process.env.SPLUNK_HEC_TOKEN;
-  const indexName = process.env.SPLUNK_INDEX || "aws_loom"; 
-  const sourcetypeName = process.env.SPLUNK_SOURCETYPE || "aws:loom:application";
+  const indexName = process.env.SPLUNK_INDEX || "pago_facil"; 
+  const sourcetypeName = process.env.SPLUNK_SOURCETYPE || "aws:pago_facil:application";
   const environment = process.env.ENVIRONMENT || "unknown - refer logstream prefix to classify env names";
 
   const [url, token] = await Promise.all([
