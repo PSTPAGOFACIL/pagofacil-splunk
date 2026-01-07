@@ -37,6 +37,7 @@ zip -r ../splunk.zip lambda.js lib/
 4. Run:
 terraform plan
 terraform apply
+
 Environment Detection:
 - ENVIRONMENT var is passed into Lambda.
 - Included in log payload as host (e.g., host=dev)

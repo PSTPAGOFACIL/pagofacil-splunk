@@ -162,12 +162,12 @@ module "splunk_forwarder_lambda" {
   memory_size = 256
   timeout     = 10
   environment_variables = {
-    SPLUNK_HEC_URL     = "${var.environment}/pf_splunk_hec_url"
-    SPLUNK_HEC_TOKEN   = "${var.environment}/pf_splunk_hec_token"
-    SPLUNK_INDEX       = var.pf_splunk_index
-    SPLUNK_SOURCE_TYPE = var.pf_splunk_source_type
-    ENVIRONMENT        = var.environment
-    ZIP_VERSION        = filemd5("${path.module}/splunk.zip")
+    SPLUNK_HEC_URL    = "${var.environment}/pf_splunk_hec_url"
+    SPLUNK_HEC_TOKEN  = "${var.environment}/pf_splunk_hec_token"
+    SPLUNK_INDEX      = var.pf_splunk_index
+    SPLUNK_SOURCETYPE = var.pf_splunk_source_type
+    ENVIRONMENT       = var.environment
+    ZIP_VERSION       = filemd5("${path.module}/splunk.zip")
   }
   create_role = false
   lambda_role = aws_iam_role.lambda_splunk_role.arn
