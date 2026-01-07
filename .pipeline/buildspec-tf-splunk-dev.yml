@@ -26,7 +26,7 @@ phases:
       - echo "Initializing Terraform..."
       - terraform init
       - terraform plan --var-file="dev.tfvars" -out=tfplan
-      # - terraform terraform apply -auto-approve tfplan
+      - terraform terraform apply -auto-approve tfplan
 
       - |
         echo "========================================"
@@ -36,57 +36,3 @@ phases:
         echo "✅ Environment: $ENVIRONMENT"
         echo "✅ Timestamp: $(date)"
         echo "========================================"
-  # post_build:
-  #   commands:
-  #     - echo "📤 Starting notification process..."
-  #     - echo "SNS Topic ARN= $SNS_TOPIC_NOTIFY"
-  #     - |
-  #       # Extraer outputs de Terraform con manejo de errores
-  #       echo "📊 Extracting Terraform outputs..."
-  #       if terraform output -json > tfoutputs.json 2>/dev/null; then
-  #         echo "✅ Terraform outputs extracted successfully"
-  #       else
-  #         echo "⚠️  No Terraform outputs available or error occurred"
-  #         echo '{}' > tfoutputs.json
-  #       fi
-  #     - |
-  #       # Crear mensaje de notificación detallado
-  #       TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S UTC')
-  #       cat > notification.json << EOF
-  #       {
-  #         "deployment": {
-  #           "service": "$API_NAME",
-  #           "environment": "$ENVIRONMENT",
-  #           "subdomain": "$subdomain",
-  #           "action": "$TERRAFORM_ACTION",
-  #           "timestamp": "$TIMESTAMP",
-  #           "commit_id": "$COMMIT_ID",
-  #           "branch": "$BRANCH_NAME",
-  #           "status": "SUCCESS"
-  #         },
-  #         "terraform_outputs": $(cat tfoutputs.json)
-  #       }
-  #       EOF
-  #     - |
-  #       # Enviar notificación con manejo de errores
-  #       echo "📨 Sending deployment notification..."
-  #       if aws sns publish \
-  #         --topic-arn "$SNS_TOPIC_NOTIFY" \
-  #         --subject "✅ DEPLOY SUCCESS: $API_NAME ($ENVIRONMENT)" \
-  #         --message file://notification.json > /dev/null 2>&1; then
-  #         echo "========================================"
-  #         echo "✅ NOTIFICATION SENT SUCCESSFULLY! ✅"
-  #         echo "========================================"
-  #       else
-  #         echo "========================================"
-  #         echo "⚠️  NOTIFICATION FAILED (BUT DEPLOY OK) ⚠️"
-  #         echo "========================================"
-  #       fi
-  #     - |
-  #       echo "========================================"
-  #       echo "🏁 PIPELINE EXECUTION COMPLETED! 🏁"
-  #       echo "========================================"
-  #       echo "Service: $API_NAME"
-  #       echo "Status: SUCCESS ✅"
-  #       echo "Time: $(date)"
-  #       echo "========================================"
