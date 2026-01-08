@@ -190,6 +190,10 @@ data "aws_cloudwatch_log_groups" "all_lambda_logs" {
   log_group_name_prefix = "/aws/lambda/"
 }
 
+data "aws_cloudwatch_log_groups" "all_apigateway_logs" {
+  log_group_name_prefix = "/aws/apigateway/"
+}
+
 locals {
   filtered_lambda_log_group_names = toset([
     for name in data.aws_cloudwatch_log_groups.all_lambda_logs.log_group_names :
@@ -206,3 +210,13 @@ resource "aws_cloudwatch_log_subscription_filter" "splunk_log_forwarder_lambdas"
   filter_pattern  = ""
   depends_on      = [aws_lambda_permission.allow_cloudwatch]
 }
+
+resource "aws_cloudwatch_log_subscription_filter" "splunk_log_forwarder_apigateways" {
+  for_each        = data.aws_cloudwatch_log_groups.all_apigateway_logs
+  name            = "cloudwatch-to-splunk"
+  log_group_name  = each.value
+  destination_arn = module.splunk_forwarder_lambda.lambda_function_arn
+  filter_pattern  = ""
+  depends_on      = [aws_lambda_permission.allow_cloudwatch]
+}
+
