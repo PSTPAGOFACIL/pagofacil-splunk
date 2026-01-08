@@ -214,7 +214,7 @@ resource "aws_cloudwatch_log_subscription_filter" "splunk_log_forwarder_lambdas"
 resource "aws_cloudwatch_log_subscription_filter" "splunk_log_forwarder_apigateways" {
   for_each        = data.aws_cloudwatch_log_groups.all_apigateway_logs.log_group_names
   name            = "cloudwatch-to-splunk"
-  log_group_name  = each.value.
+  log_group_name  = each.value
   destination_arn = module.splunk_forwarder_lambda.lambda_function_arn
   filter_pattern  = ""
   depends_on      = [aws_lambda_permission.allow_cloudwatch]
