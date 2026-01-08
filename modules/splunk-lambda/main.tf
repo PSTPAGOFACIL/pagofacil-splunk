@@ -192,7 +192,7 @@ data "aws_cloudwatch_log_groups" "all_lambda_logs" {
 
 locals {
   filtered_lambda_log_group_names = toset([
-    for name in data.aws_cloudwatch_log_groups.test.log_group_names :
+    for name in data.aws_cloudwatch_log_groups.all_lambda_logs.log_group_names :
     name
     if !strcontains(name, "splunk")
   ])
