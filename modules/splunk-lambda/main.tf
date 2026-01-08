@@ -185,3 +185,16 @@ resource "aws_lambda_permission" "allow_cloudwatch" {
   principal     = "logs.amazonaws.com"
   source_arn    = "arn:aws:logs:${var.aws_region}:${var.aws_account_id}:log-group:*:*"
 }
+
+data "aws_cloudwatch_log_groups" "lambda_logs" {
+  log_group_name_prefix = "/aws/lambda/"
+}
+
+resource "aws_cloudwatch_log_subscription_filter" "splunk_log_forwarder_test" {
+  for_each        = data.aws_cloudwatch_log_groups.lambda_logs.log_group_names
+  name            = "cloudwatch-to-splunk"
+  log_group_name  = each.value
+  destination_arn = module.splunk_forwarder_lambda.lambda_function_arn
+  filter_pattern  = ""
+  depends_on      = [aws_lambda_permission.allow_cloudwatch]
+}
