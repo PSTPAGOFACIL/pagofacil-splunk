@@ -26,7 +26,7 @@ phases:
       - echo "Initializing Terraform..."
       - terraform init
       - terraform plan --var-file="dev.tfvars" -out=tfplan
-      # - terraform apply -auto-approve tfplan
+      - terraform apply -auto-approve tfplan
 
       - |
         echo "========================================"
