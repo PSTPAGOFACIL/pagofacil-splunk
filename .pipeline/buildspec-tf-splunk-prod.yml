@@ -2,7 +2,7 @@ version: 0.2
 
 env:
   variables:
-    ENVIRONMENT: "dev"
+    ENVIRONMENT: "prod"
 
 cache:
   paths:
@@ -24,7 +24,7 @@ phases:
       - echo "Changing the directory to the deployment path..."
       - echo "Initializing Terraform..."
       - terraform init
-      - terraform plan --var-file="dev.tfvars" -out=tfplan
+      - terraform plan --var-file="prod.tfvars" -out=tfplan
       - terraform apply -auto-approve tfplan
 
       - |
