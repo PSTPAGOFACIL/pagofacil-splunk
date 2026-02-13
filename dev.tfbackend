@@ -1,0 +1,4 @@
+bucket = "pagofacil-splunk-tf-backend-dev"
+key    = "dev"
+region = "us-west-2"
+encrypt = true

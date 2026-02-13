@@ -23,7 +23,7 @@ phases:
     commands:
       - echo "Changing the directory to the deployment path..."
       - echo "Initializing Terraform..."
-      - terraform init
+      - terraform init -backend-config=dev.tfbackend
       - terraform plan --var-file="dev.tfvars" -out=tfplan
       - terraform apply -auto-approve tfplan
 

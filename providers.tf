@@ -11,11 +11,4 @@ terraform {
       version = "~> 5.0"
     }
   }
-
-  backend "s3" {
-    bucket  = "pagofacil-splunk-tf-backend-dev"
-    key     = "dev"
-    encrypt = true
-    region  = "us-west-2"
-  }
 }
