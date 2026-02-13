@@ -3,6 +3,7 @@ version: 0.2
 env:
   variables:
     ENVIRONMENT: "prod"
+    TERRAFORM_VERSION: 1.7.0
 
 cache:
   paths:
